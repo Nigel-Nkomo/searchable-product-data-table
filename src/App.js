@@ -1,9 +1,14 @@
 import { PRODUCTS } from "./products";
+import "./App.css";
 
 function ProductCategoryRow({ category }) {
-  <tr>
-    <th colSpan="2">{category}</th>
-  </tr>;
+  return (
+    <tr>
+      <th colSpan="2" className="table__heading">
+        {category}
+      </th>
+    </tr>
+  );
 }
 
 function ProductRow({ product }) {
@@ -34,14 +39,12 @@ function ProductTable({ products }) {
         />
       );
     }
-
     rows.push(<ProductRow product={product} key={product.name} />);
-
     lastCategory = product.category;
   });
 
   return (
-    <table>
+    <table className="table">
       <thead>
         <tr>
           <th>Name</th>
@@ -55,10 +58,11 @@ function ProductTable({ products }) {
 
 function SearchBar() {
   return (
-    <form>
-      <input type="text" placeholder="Search..." />
+    <form className="search__form">
+      <input type="text" placeholder="Search..." className="search__input" />
       <label>
-        <input type="checkbox" /> Only show products in stock
+        <input type="checkbox" className="search__checkbox" /> Only show
+        products in stock
       </label>
     </form>
   );
@@ -66,7 +70,7 @@ function SearchBar() {
 
 function FilterableProductTable({ products }) {
   return (
-    <div>
+    <div className="container">
       <SearchBar />
       <ProductTable products={products} />
     </div>
