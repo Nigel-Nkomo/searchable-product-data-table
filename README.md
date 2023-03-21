@@ -1,70 +1,69 @@
-# Getting Started with Create React App
+# Thinking in React : Searchable data table
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is a searchable data product table. It contains a search bar and a checkbox filter for the items that are in the table. [Click here to view the site.](https://searchable-product-data-table.netlify.app/)
 
-## Available Scripts
+## Notes
 
-In the project directory, you can run:
+1.  **Break the UI into a component hierarchy**
+    a. draw boxes around every component and subcomponent using the <i>single responsibility principle</i>
+    b. name the components and subcomponents
+    c. arrange them into a hierarchy, e.g.
 
-### `npm start`
+        - Grandparent
+        	- Parent
+        	- Parent
+        		- Child
+        		- Child
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+2.  **Build a static version in React**
+    a. build a UI that renders your data model without adding any interactivity
+    b. you can build from the bottom up
+    c. use props to pass data from a parent to a child
+    d. don't use state; it is reserved for interactivity
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+3.  **Find the minimal but complete represantation of UI state**
+    a. you need to let users change your underlying data model using state
+    b. keep it DRY (Don't repeat yourself)
+    c. Think of all the pieces of data in your application, e.g. - the original list of fruits and vegetables - the search text the user has entered - the value of the checkbox - the filtered list of fruits and vegetables
+    d. which of them is state?
+      
+     The following define what state isn't:
+      
+     - data that REMAINS UNCHANGED over time - data that is PASSED FROM A PARENT via PROPS - data that is COMPUTED on EXISTING props or state in your component
+      
+    e. the original list _remains unchanged_ over time and it's _passed from the parent as a prop_.
+    f. the search text _changes_ over time and it _can't be computed_ from anything.
+    g. the value of the checkbox also _changes_ over time and _can't be computed_ from anything.
+    h. the filtered list _can be computed_ using the _search text_.
+    i. therefore, the search text data and the checkbox data are state
 
-### `npm test`
+4.  **Identify where your state should live**
+    a. react uses one way data flow : passing data from the parent to the child
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+    - identify every component that renders something based on state
+    - find their closest common parent component
+    - decide where state should live:
+      - their common parent
+      - a component above their common parent
+      - create a component solely for holding state and place it above their common parent
 
-### `npm run build`
+5.  **Add inverse data flow**
+    a. you need to support data flowing in the opposite direction
+    b. the children need to update the state in the common parent using the _setFunctions_,
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+# Implementing a UI in React : Summary
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Start with the mockup from the designer
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+> Break the UI into components, describe visual states and connect them so that data flows through them
 
-### `npm run eject`
+```mermaid
+graph LR
+ B(Break the UI into a <br/> component hierarchy)
+B --> C(Build the static <br/> version in React)
+C --> D(Find the minimal but <br/> complete representation <br/> of UI state)
+D --> E(Identify where your <br/> state should live)
+E --> F(Add inverse data flow)
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+```
