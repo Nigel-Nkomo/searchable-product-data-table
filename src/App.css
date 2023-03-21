@@ -10,6 +10,18 @@ html {
   font-size: 150%;
 }
 
+@media (max-width: 430px) {
+  html {
+    font-size: 120%;
+  }
+}
+
+@media (max-width: 360px) {
+  html {
+    font-size: 100%;
+  }
+}
+
 body {
   font-family: "Space Grotesk", sans-serif;
 }
